@@ -44,11 +44,24 @@ modification de code n'est alors nécessaire.
 Si le fichier est introuvable, la carte affiche automatiquement les initiales du
 membre à la place du portrait.
 
+## Ajouter des photos d'événement
+
+Déposer les images dans `public/images/gallery/<CODE>/` en les numérotant
+`1.jpg`, `2.jpg`, … puis ajuster le compteur dans `src/data/events.js` :
+
+```js
+gallery: galleryOf('IDEH', 7),   // ← nombre de fichiers dans le dossier
+```
+
+La bande horizontale en bas de la page événements est construite automatiquement
+à partir des galeries de tous les événements — rien d'autre à modifier.
+
 ## Structure
 
 ```
 public/images/team/      portraits du board (25)
-public/images/events/    photos JNJD / IDEH / T2D
+public/images/events/    visuels de couverture des événements
+public/images/gallery/   photos par événement : IDEH/ (7), JNJD/ (9), T2D/ (5)
 src/data/team.js         organigramme — source unique des membres et de leurs photos
 src/data/cells.js        les 6 cellules + contenu des modales
 src/data/events.js       JNJD, IDEH, T2D + galerie

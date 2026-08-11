@@ -1,9 +1,19 @@
 import { useEffect } from 'react'
 
-export default function Modal({ open, onClose, title, subtitle, children, maxWidth = 'max-w-4xl' }) {
+export default function Modal({
+  open,
+  onClose,
+  title,
+  subtitle,
+  children,
+  maxWidth = 'max-w-4xl',
+  // Set while something sits on top of the modal (the fullscreen viewer), so a
+  // single Escape closes only the topmost layer.
+  escDisabled = false,
+}) {
   useEffect(() => {
     if (!open) return
-    const onKey = (e) => e.key === 'Escape' && onClose()
+    const onKey = (e) => e.key === 'Escape' && !escDisabled && onClose()
     document.addEventListener('keydown', onKey)
     const prev = document.body.style.overflow
     document.body.style.overflow = 'hidden'
@@ -11,7 +21,7 @@ export default function Modal({ open, onClose, title, subtitle, children, maxWid
       document.removeEventListener('keydown', onKey)
       document.body.style.overflow = prev
     }
-  }, [open, onClose])
+  }, [open, onClose, escDisabled])
 
   if (!open) return null
 

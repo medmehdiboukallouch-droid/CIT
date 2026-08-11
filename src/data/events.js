@@ -1,3 +1,7 @@
+/** Gallery folders live in `public/images/gallery/<CODE>/<n>.jpg`. */
+const galleryOf = (code, count) =>
+  Array.from({ length: count }, (_, i) => `images/gallery/${code}/${i + 1}.jpg`)
+
 export const events = [
   {
     id: 'jnjd',
@@ -18,15 +22,7 @@ export const events = [
       'Team collaboration and networking',
       'Algorithmic problem-solving challenges',
     ],
-    gallery: [
-      'images/events/jnjd.jpg',
-      'images/events/JNJD1.JPG',
-      'images/events/JNJD2.JPG',
-      'images/events/jnjd3.jpg',
-      'images/events/jnjd4.jpg',
-      'images/events/JNJD5.png',
-      'images/events/JNJD6.png',
-    ],
+    gallery: galleryOf('JNJD', 9),
   },
   {
     id: 'ideh',
@@ -48,12 +44,7 @@ export const events = [
       'Penetration testing techniques',
       'Threat intelligence sessions',
     ],
-    gallery: [
-      'images/events/IDEH.JPG',
-      'images/events/IDEH1.JPG',
-      'images/events/IDEH2.JPG',
-      'images/events/ideh3.jpg',
-    ],
+    gallery: galleryOf('IDEH', 7),
   },
   {
     id: 't2d',
@@ -74,21 +65,14 @@ export const events = [
       'Final pitch to AI/Data expert jury',
       'Internship for the winning team',
     ],
-    gallery: [],
+    gallery: galleryOf('T2D', 5),
   },
 ]
 
-/** Horizontal memory strip shown under the event cards. */
-export const gallery = [
-  { src: 'images/events/IDEH.JPG', label: 'IDEH' },
-  { src: 'images/events/IDEH1.JPG', label: 'IDEH' },
-  { src: 'images/events/IDEH2.JPG', label: 'IDEH' },
-  { src: 'images/events/ideh3.jpg', label: 'IDEH' },
-  { src: 'images/events/jnjd.jpg', label: 'JNJD' },
-  { src: 'images/events/JNJD1.JPG', label: 'JNJD' },
-  { src: 'images/events/JNJD2.JPG', label: 'JNJD' },
-  { src: 'images/events/jnjd3.jpg', label: 'JNJD' },
-  { src: 'images/events/jnjd4.jpg', label: 'JNJD' },
-  { src: 'images/events/JNJD5.png', label: 'JNJD' },
-  { src: 'images/events/JNJD6.png', label: 'JNJD' },
-]
+/**
+ * Horizontal memory strip at the bottom of the events page — every event photo,
+ * so the strip and the per-event showcases always stay in sync.
+ */
+export const gallery = events.flatMap((e) =>
+  e.gallery.map((src) => ({ src, label: e.code })),
+)

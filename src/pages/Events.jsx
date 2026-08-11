@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 import TerminalHeading from '../components/TerminalHeading'
 import Modal from '../components/Modal'
 import { events, gallery } from '../data/events'
@@ -43,9 +43,7 @@ function EventCard({ event, onOpen }) {
         <p className="terminal-text text-sm font-semibold text-ink">{event.title}</p>
         <p className="mt-1 text-xs text-ink-faint">{event.subtitle}</p>
 
-        <p className="mt-4 text-xs leading-6 text-ink-dim">
-          {event.description.slice(0, 150)}...
-        </p>
+        <p className="mt-4 text-xs leading-6 text-ink-dim">{event.description.slice(0, 150)}...</p>
 
         <div className="mt-5">
           <p className="text-[10px] uppercase tracking-widest text-ink-faint">Key Features:</p>
@@ -72,54 +70,94 @@ function EventCard({ event, onOpen }) {
   )
 }
 
-function Lightbox({ item, onClose, onPrev, onNext }) {
-  if (!item) return null
+/**
+ * Fullscreen viewer shared by the bottom strip and by each event showcase, so a
+ * photo opens the same way wherever it is clicked.
+ */
+function Lightbox({ items, index, onClose, onStep }) {
+  const open = index >= 0 && items.length > 0
+
+  useEffect(() => {
+    if (!open) return
+    const onKey = (e) => {
+      if (e.key === 'Escape') onClose()
+      if (e.key === 'ArrowLeft') onStep(-1)
+      if (e.key === 'ArrowRight') onStep(1)
+    }
+    document.addEventListener('keydown', onKey)
+    return () => document.removeEventListener('keydown', onKey)
+  }, [open, onClose, onStep])
+
+  if (!open) return null
+  const item = items[index]
+
   return (
     <div
-      className="fixed inset-0 z-[110] flex items-center justify-center bg-void/93 p-4 backdrop-blur-sm"
+      className="fixed inset-0 z-[120] flex flex-col items-center justify-center bg-void/95 p-4 backdrop-blur-sm"
       onClick={onClose}
       role="dialog"
       aria-modal="true"
     >
       <button
         type="button"
-        onClick={(e) => (e.stopPropagation(), onPrev())}
-        className="absolute left-4 rounded-full border border-line bg-void/80 px-3.5 py-2 text-term transition-colors hover:border-term/60"
-        aria-label="Previous"
+        onClick={onClose}
+        aria-label="Close"
+        className="absolute right-4 top-4 rounded-md border border-line bg-void/80 px-3 py-1.5 text-ink-dim transition-colors hover:border-danger/60 hover:text-danger"
       >
-        ‹
+        ✕
       </button>
 
-      <figure onClick={(e) => e.stopPropagation()} className="max-h-full">
+      {items.length > 1 && (
+        <button
+          type="button"
+          onClick={(e) => (e.stopPropagation(), onStep(-1))}
+          aria-label="Previous"
+          className="absolute left-3 z-10 rounded-full border border-line bg-void/85 px-4 py-3 text-lg text-term transition-colors hover:border-term/60 sm:left-6"
+        >
+          ‹
+        </button>
+      )}
+
+      <figure onClick={(e) => e.stopPropagation()} className="flex max-h-full flex-col items-center">
         <img
           src={asset(item.src)}
           alt={item.label}
-          className="max-h-[78vh] w-auto rounded-xl border border-line-2 object-contain"
+          className="max-h-[85vh] max-w-[92vw] w-auto rounded-xl border border-line-2 object-contain"
         />
         <figcaption className="mt-3 text-center text-xs text-ink-dim">
-          <span className="text-term">{item.label}</span> — click outside to close
+          <span className="text-term">{item.label}</span>
+          <span className="mx-2 text-ink-faint">|</span>
+          {index + 1} / {items.length}
+          <span className="mx-2 text-ink-faint">|</span>
+          <span className="text-ink-faint">← → to navigate • Esc to close</span>
         </figcaption>
       </figure>
 
-      <button
-        type="button"
-        onClick={(e) => (e.stopPropagation(), onNext())}
-        className="absolute right-4 rounded-full border border-line bg-void/80 px-3.5 py-2 text-term transition-colors hover:border-term/60"
-        aria-label="Next"
-      >
-        ›
-      </button>
+      {items.length > 1 && (
+        <button
+          type="button"
+          onClick={(e) => (e.stopPropagation(), onStep(1))}
+          aria-label="Next"
+          className="absolute right-3 z-10 rounded-full border border-line bg-void/85 px-4 py-3 text-lg text-term transition-colors hover:border-term/60 sm:right-6"
+        >
+          ›
+        </button>
+      )}
     </div>
   )
 }
 
 export default function Events() {
   const [active, setActive] = useState(null)
-  const [lightbox, setLightbox] = useState(-1)
+  const [viewer, setViewer] = useState({ items: [], index: -1 })
   const a = active ? accent(active.accent) : null
 
-  const move = (delta) =>
-    setLightbox((i) => (i + delta + gallery.length) % gallery.length)
+  const closeViewer = useCallback(() => setViewer((v) => ({ ...v, index: -1 })), [])
+  const step = useCallback(
+    (delta) =>
+      setViewer((v) => ({ ...v, index: (v.index + delta + v.items.length) % v.items.length })),
+    [],
+  )
 
   return (
     <>
@@ -165,7 +203,7 @@ export default function Events() {
               <button
                 key={g.src}
                 type="button"
-                onClick={() => setLightbox(i)}
+                onClick={() => setViewer({ items: gallery, index: i })}
                 className="group relative h-52 w-72 shrink-0 snap-start overflow-hidden rounded-xl border border-line bg-void transition-all duration-300 hover:border-term/50"
               >
                 <img
@@ -193,6 +231,7 @@ export default function Events() {
         title={active?.code}
         subtitle={active?.title}
         maxWidth="max-w-3xl"
+        escDisabled={viewer.index >= 0}
       >
         {active && (
           <div className="space-y-8">
@@ -222,15 +261,31 @@ export default function Events() {
                 <h4 className={`terminal-text text-sm font-semibold ${a.text}`}>
                   &gt; Event Showcase
                 </h4>
+                <p className="mt-1 text-xs text-ink-faint">Click a photo to open it fullscreen</p>
+
                 <div className="mt-3 grid grid-cols-2 gap-3 sm:grid-cols-3">
-                  {active.gallery.map((src) => (
-                    <img
+                  {active.gallery.map((src, i) => (
+                    <button
                       key={src}
-                      src={asset(src)}
-                      alt={active.code}
-                      loading="lazy"
-                      className="h-28 w-full rounded-lg border border-line object-cover opacity-70 transition-opacity duration-300 hover:opacity-100"
-                    />
+                      type="button"
+                      onClick={() =>
+                        setViewer({
+                          items: active.gallery.map((s) => ({ src: s, label: active.code })),
+                          index: i,
+                        })
+                      }
+                      className="group relative h-28 overflow-hidden rounded-lg border border-line transition-all duration-300 hover:border-term/50"
+                    >
+                      <img
+                        src={asset(src)}
+                        alt={`${active.code} ${i + 1}`}
+                        loading="lazy"
+                        className="h-full w-full object-cover opacity-70 transition-all duration-500 group-hover:scale-105 group-hover:opacity-100"
+                      />
+                      <span className="absolute inset-0 flex items-center justify-center bg-void/60 text-lg text-term opacity-0 transition-opacity duration-200 group-hover:opacity-100">
+                        ⛶
+                      </span>
+                    </button>
                   ))}
                 </div>
               </section>
@@ -240,10 +295,10 @@ export default function Events() {
       </Modal>
 
       <Lightbox
-        item={lightbox >= 0 ? gallery[lightbox] : null}
-        onClose={() => setLightbox(-1)}
-        onPrev={() => move(-1)}
-        onNext={() => move(1)}
+        items={viewer.items}
+        index={viewer.index}
+        onClose={closeViewer}
+        onStep={step}
       />
     </>
   )

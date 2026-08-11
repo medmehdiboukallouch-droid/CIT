@@ -135,9 +135,11 @@ export default function Home() {
 
           <div className="panel mt-10 p-6 sm:p-9">
             <p className="text-sm leading-8 text-ink sm:text-base">
-              The CIT club is the first IT club in Morocco and has as a goal to gather passionate
-              students reach their goals in IT by offering courses throughout the year and make them
-              compete in competitions.
+              The CIT Club is the first IT club in Morocco, dedicated to bringing together passionate
+              students and helping them achieve their goals in technology. Throughout the year, we
+              provide courses, workshops, and training while encouraging members to participate in IT
+              competitions. We also organize three major IT events in Morocco each year, creating
+              opportunities for students to learn, connect, innovate, and showcase their skills.
             </p>
           </div>
 

@@ -6,9 +6,9 @@ export default function MemberPhoto({ member, size = 'md', accentClasses }) {
   const [broken, setBroken] = useState(false)
 
   const dims = {
-    sm: 'h-20 w-20',
-    md: 'h-24 w-24',
-    lg: 'h-32 w-32',
+    sm: 'h-32 w-32 sm:h-36 sm:w-36',
+    md: 'h-36 w-36 sm:h-40 sm:w-40',
+    lg: 'h-48 w-48 sm:h-56 sm:w-56',
   }[size]
 
   const initials = `${member.firstName?.[0] ?? ''}${member.lastName?.[0] ?? ''}`.toUpperCase()
@@ -22,7 +22,7 @@ export default function MemberPhoto({ member, size = 'md', accentClasses }) {
       ].join(' ')}
     >
       {broken ? (
-        <div className="flex h-full w-full items-center justify-center text-lg font-bold text-ink-faint">
+        <div className="flex h-full w-full items-center justify-center text-2xl font-bold text-ink-faint">
           {initials}
         </div>
       ) : (
