@@ -1,5 +1,7 @@
+import { useState } from 'react'
 import TerminalHeading from '../components/TerminalHeading'
 import MemberCard from '../components/MemberCard'
+import MemberSpotlight from '../components/MemberSpotlight'
 import { cellTeams, executive, teamStats } from '../data/team'
 import { accent } from '../utils/accents'
 
@@ -15,6 +17,10 @@ function SubHeading({ label }) {
 
 export default function Team() {
   const [chairman, ...board] = executive
+  // { member, accentKey, cell } — the profile shown fullscreen, or null.
+  const [spotlight, setSpotlight] = useState(null)
+
+  const open = (accentKey, cell) => (member) => setSpotlight({ member, accentKey, cell })
 
   return (
     <>
@@ -35,7 +41,12 @@ export default function Team() {
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           {/* Chairman */}
           <div className="mx-auto max-w-sm">
-            <MemberCard member={chairman} accentKey="term" featured />
+            <MemberCard
+              member={chairman}
+              accentKey="term"
+              featured
+              onSelect={open('term', 'Executive Board')}
+            />
           </div>
 
           {/* Executive board */}
@@ -43,7 +54,12 @@ export default function Team() {
             <SubHeading label="Executive Board" />
             <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
               {board.map((m) => (
-                <MemberCard key={m.id} member={m} accentKey="cyan" />
+                <MemberCard
+                  key={m.id}
+                  member={m}
+                  accentKey="cyan"
+                  onSelect={open('cyan', 'Executive Board')}
+                />
               ))}
             </div>
           </div>
@@ -68,7 +84,13 @@ export default function Team() {
 
                     <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
                       {cell.members.map((m) => (
-                        <MemberCard key={m.id} member={m} accentKey={cell.accent} size="sm" />
+                        <MemberCard
+                          key={m.id}
+                          member={m}
+                          accentKey={cell.accent}
+                          size="sm"
+                          onSelect={open(cell.accent, cell.cell)}
+                        />
                       ))}
                     </div>
                   </div>
@@ -90,6 +112,13 @@ export default function Team() {
           </div>
         </div>
       </section>
+
+      <MemberSpotlight
+        member={spotlight?.member}
+        accentKey={spotlight?.accentKey}
+        cell={spotlight?.cell}
+        onClose={() => setSpotlight(null)}
+      />
     </>
   )
 }

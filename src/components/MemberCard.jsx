@@ -1,13 +1,22 @@
 import MemberPhoto from './MemberPhoto'
 import { accent } from '../utils/accents'
 
-export default function MemberCard({ member, accentKey = 'term', size = 'md', featured = false }) {
+export default function MemberCard({
+  member,
+  accentKey = 'term',
+  size = 'md',
+  featured = false,
+  onSelect,
+}) {
   const a = accent(accentKey)
 
   return (
-    <article
+    <button
+      type="button"
+      onClick={() => onSelect?.(member)}
+      aria-label={`Open ${member.firstName} ${member.lastName}'s profile`}
       className={[
-        'panel panel-hover group flex flex-col items-center px-5 py-6 text-center',
+        'panel panel-hover group flex w-full cursor-pointer flex-col items-center px-5 py-6 text-center',
         featured ? 'py-8' : '',
       ].join(' ')}
     >
@@ -29,6 +38,6 @@ export default function MemberCard({ member, accentKey = 'term', size = 'md', fe
       <span
         className={`mt-4 h-px w-10 ${a.dot} opacity-40 transition-all duration-300 group-hover:w-16 group-hover:opacity-90`}
       />
-    </article>
+    </button>
   )
 }
