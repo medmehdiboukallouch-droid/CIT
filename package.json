@@ -1,13 +1,16 @@
 {
   "name": "cit-website",
   "private": true,
+  "homepage": "https://medmehdiboukallouch-droid.github.io/CIT/",
   "version": "1.0.0",
   "type": "module",
   "description": "CIT Club - Club Informatique & Telecoms",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d dist"
   },
   "dependencies": {
     "react": "^19.1.0",
@@ -17,6 +20,7 @@
   "devDependencies": {
     "@tailwindcss/vite": "^4.1.11",
     "@vitejs/plugin-react": "^5.0.0",
+    "gh-pages": "^6.3.0",
     "tailwindcss": "^4.1.11",
     "vite": "^7.0.4"
   }
