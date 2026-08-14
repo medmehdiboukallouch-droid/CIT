@@ -9,10 +9,7 @@ export const cells = [
       'The Web Cell focuses on web development and related technologies. It deals with designing, building, and maintaining websites, web applications, and online services. This domain covers various aspects, including front-end development (user interface and user experience), back-end development (server-side logic and databases), web security, and web performance optimization. The cell also provides formations (training sessions) throughout the year to help members develop their web development skills.',
     overview:
       'Our Web Cell is at the forefront of modern web technologies. We specialize in creating responsive, scalable, and user-friendly web applications. Members work on real-world projects using the latest frameworks and tools, gaining hands-on experience in full-stack development.',
-    heads: [
-      { role: 'CHIEF', name: 'LAMSAAF Yassine' },
-      { role: 'CO-CHIEF', name: 'RAGUIG Mohammed Amine' },
-    ],
+    heads: [{ role: 'CHIEF', name: 'AMTOUT Oualid' }],
     projects: ['CIT Platform', 'University Management System', 'Real-time Chat Application'],
     skills: ['Frontend Development', 'Backend Development', 'API Design', 'Database Management'],
   },
@@ -27,8 +24,8 @@ export const cells = [
     overview:
       'The Data Cell transforms raw information into actionable insights. Our team works with cutting-edge tools and techniques in data science, machine learning, and business intelligence. We tackle real-world problems using statistical analysis and predictive modeling.',
     heads: [
-      { role: 'CHIEF', name: 'AIT ABDELOUAHAB Mehdi' },
-      { role: 'CO-CHIEF', name: 'CHAHIRI Abderrahmane' },
+      { role: 'CHIEF', name: 'SAHABI Ahmed Reda' },
+      { role: 'CO-CHIEF', name: 'ATIK Mohammed Haytham' },
     ],
     projects: ['Market Analysis Dashboard', 'Predictive Analytics Model', 'Big Data Processing Pipeline'],
     skills: ['Data Analysis', 'Machine Learning', 'Statistical Modeling', 'Data Visualization'],
@@ -44,8 +41,8 @@ export const cells = [
     overview:
       'Our DevOps Cell focuses on streamlining development workflows and infrastructure management. We work with cloud platforms, automation tools, and monitoring systems to ensure reliable, scalable, and efficient software delivery.',
     heads: [
-      { role: 'CHIEF', name: 'EL MOUDEN Abdelghafor' },
-      { role: 'CO-CHIEF', name: 'AHORRAR Omar' },
+      { role: 'CHIEF', name: 'TARTOR Yassine' },
+      { role: 'CO-CHIEF', name: 'EL GHARBAOUI Ibrahim' },
     ],
     projects: ['CI/CD Pipeline Automation', 'Cloud Infrastructure Setup', 'Monitoring and Alerting System'],
     skills: ['Infrastructure Automation', 'Cloud Computing', 'Container Orchestration', 'System Monitoring'],
@@ -60,7 +57,7 @@ export const cells = [
       'The Design Cell revolves around various aspects of visual and user experience design. It involves creating aesthetically pleasing and functional designs for products, services, or interfaces. This domain includes graphic design, user interface (UI) design, user experience (UX) design, interaction design, and prototyping. The cell also provides formations (training sessions) throughout the year to help members develop their design and creative skills.',
     overview:
       'The Design Cell creates visually stunning and user-centered designs. Our team specializes in UI/UX design, graphic design, and brand development, ensuring that every project is both beautiful and functional.',
-    heads: [{ role: 'CHIEF', name: 'ZIZAH Taha' }],
+    heads: [{ role: 'CHIEF', name: 'CHAFIK Jawad' }],
     projects: ['Mobile App UI/UX Design', 'Brand Identity System', 'Interactive Website Prototype'],
     skills: ['User Interface Design', 'User Experience Research', 'Graphic Design', 'Prototyping'],
   },
@@ -75,8 +72,8 @@ export const cells = [
     overview:
       'Our Security Cell is dedicated to protecting digital assets and ensuring cybersecurity. We conduct penetration testing, security audits, and develop security frameworks to protect against evolving threats.',
     heads: [
-      { role: 'CHIEF', name: 'ANADDAM Mohamed' },
-      { role: 'CO-CHIEF', name: 'AKALLAL Mohamed Issam' },
+      { role: 'CHIEF', name: 'LIDRISSI Walid' },
+      { role: 'CO-CHIEF', name: 'EL HOUSSAINI Mohamed Taha' },
     ],
     projects: ['Vulnerability Assessment Tool', 'Security Audit Framework', 'Incident Response System'],
     skills: ['Ethical Hacking', 'Security Auditing', 'Risk Assessment', 'Incident Response'],
@@ -92,8 +89,8 @@ export const cells = [
     overview:
       'The Algorithmic Cell excels in computational problem-solving and algorithm design. We participate in competitive programming contests and develop efficient algorithms for complex computational challenges.',
     heads: [
-      { role: 'CHIEF', name: 'SERJI Asmae' },
-      { role: 'CO-CHIEF', name: 'FAJOUI Anass' },
+      { role: 'CHIEF', name: 'BEJJA Ilyas' },
+      { role: 'CO-CHIEF', name: 'EL KROUK Youssef' },
     ],
     projects: ['Algorithm Optimization Library', 'Competitive Programming Platform', 'AI Problem Solver'],
     skills: ['Algorithm Design', 'Data Structures', 'Problem Solving', 'Code Optimization'],
