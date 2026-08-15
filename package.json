@@ -1,6 +1,7 @@
 {
   "name": "cit-website",
   "private": true,
+  "homepage": "https://medmehdiboukallouch-droid.github.io/CIT/",
   "version": "1.0.0",
   "type": "module",
   "description": "CIT Club - Club Informatique & Telecoms",
