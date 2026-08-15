@@ -204,7 +204,7 @@ export default function Home() {
                 </ul>
 
                 <a
-                  href="https://www.datacamp.com/"
+                  href="https://www.datacamp.com/donates"
                   target="_blank"
                   rel="noreferrer noopener"
                   className="mt-7 inline-block rounded-lg border border-term/40 bg-term/10 px-5 py-2.5 text-xs uppercase tracking-widest text-term-bright transition-all duration-300 hover:bg-term hover:text-void"
